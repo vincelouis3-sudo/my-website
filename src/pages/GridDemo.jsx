@@ -445,13 +445,18 @@ export default function GridDemo() {
               <table className="w-full text-sm border-collapse">
                 <thead>
                   {/* Sort row */}
-                  <tr className="bg-[#1e3a5f] text-white">
+                  <tr style={{ backgroundColor: '#1e3a5f', color: 'white' }}>
                     {activeCols.map(col => (
                       <th
                         key={col.key}
                         onClick={() => handleSort(col)}
-                        className={`px-3 pt-3 pb-1 font-semibold whitespace-nowrap select-none transition-colors
-                          ${col.noSort ? '' : 'cursor-pointer hover:bg-[#16305a] active:bg-[#142d4a]'}
+                        onMouseEnter={e => { if (!col.noSort) e.currentTarget.style.backgroundColor = '#16305a' }}
+                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#1e3a5f' }}
+                        onMouseDown={e =>  { if (!col.noSort) e.currentTarget.style.backgroundColor = '#142d4a' }}
+                        onMouseUp={e =>    { if (!col.noSort) e.currentTarget.style.backgroundColor = '#16305a' }}
+                        style={{ backgroundColor: '#1e3a5f', transition: 'background-color 100ms' }}
+                        className={`px-3 pt-3 pb-1 font-semibold whitespace-nowrap select-none
+                          ${col.noSort ? '' : 'cursor-pointer'}
                           ${col.align === 'right' ? 'text-right' : 'text-left'}`}
                       >
                         <span className="inline-flex items-center gap-0.5">
