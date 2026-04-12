@@ -8,6 +8,7 @@ const navLinks = [
   { to: '/back-office', label: 'Back Office' },
   { to: '/executive', label: 'Executive View' },
   { to: '/crypto', label: '₿ Crypto' },
+  { to: '/grid-demo', label: '🌍 Grid Demo' },
 ]
 
 export default function Navbar() {

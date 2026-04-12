@@ -7,6 +7,7 @@ import AdvisorSnapshot from './pages/AdvisorSnapshot.jsx'
 import BackOfficeSnapshot from './pages/BackOfficeSnapshot.jsx'
 import ExecutiveSnapshot from './pages/ExecutiveSnapshot.jsx'
 import CryptoPage from './pages/CryptoPage.jsx'
+import GridDemo from './pages/GridDemo.jsx'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/back-office" element={<BackOfficeSnapshot />} />
           <Route path="/executive" element={<ExecutiveSnapshot />} />
           <Route path="/crypto" element={<CryptoPage />} />
+          <Route path="/grid-demo" element={<GridDemo />} />
         </Routes>
       </main>
       <Footer />
