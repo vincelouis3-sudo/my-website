@@ -19,31 +19,49 @@ const ALL_COLUMNS = [
   { key: 'drivingSide', label: 'Driving Side',  locked: false },
 ]
 
-function transformCountry(c) {
-  const idd = c.idd || {}
-  const root = idd.root || ''
-  const suffixes = idd.suffixes || []
-  const callingCode = suffixes.length === 1 ? root + suffixes[0] : root || '—'
+// REST Countries API now enforces a max of 10 fields per request.
+// We split into two parallel requests and merge on common name.
+const BASE = 'https://restcountries.com/v3.1/all'
+const BATCH_A = `${BASE}?fields=name,flags,region,subregion,capital,population,area,independent,unMember,idd`
+const BATCH_B = `${BASE}?fields=name,languages,currencies,timezones,tld,car`
 
-  return {
-    flag: c.flags?.png || c.flags?.svg || '',
-    flagAlt: c.flags?.alt || '',
-    commonName: c.name?.common || '—',
-    officialName: c.name?.official || '—',
-    region: c.region || '—',
-    subregion: c.subregion || '—',
-    capital: (c.capital || []).join(', ') || '—',
-    population: c.population ?? 0,
-    area: c.area ?? 0,
-    languages: Object.values(c.languages || {}).join(', ') || '—',
-    currencies: Object.values(c.currencies || {}).map(cur => cur.name).join(', ') || '—',
-    timezones: (c.timezones || []).join(', ') || '—',
-    independent: c.independent === true ? true : c.independent === false ? false : null,
-    unMember: c.unMember === true ? true : c.unMember === false ? false : null,
-    callingCode,
-    tld: (c.tld || []).join(', ') || '—',
-    drivingSide: c.car?.side || '—',
-  }
+async function fetchCountries() {
+  const [resA, resB] = await Promise.all([fetch(BATCH_A), fetch(BATCH_B)])
+  if (!resA.ok) throw new Error(`HTTP ${resA.status}`)
+  if (!resB.ok) throw new Error(`HTTP ${resB.status}`)
+  const [dataA, dataB] = await Promise.all([resA.json(), resB.json()])
+
+  // Index batch B by common name for O(1) merge
+  const mapB = {}
+  dataB.forEach(c => { mapB[c.name?.common] = c })
+
+  return dataA.map(c => {
+    const b = mapB[c.name?.common] || {}
+    const idd = c.idd || {}
+    const root = idd.root || ''
+    const suffixes = idd.suffixes || []
+    const callingCode = suffixes.length === 1 ? root + suffixes[0] : root || '—'
+
+    return {
+      flag: c.flags?.png || c.flags?.svg || '',
+      flagAlt: c.flags?.alt || '',
+      commonName: c.name?.common || '—',
+      officialName: c.name?.official || '—',
+      region: c.region || '—',
+      subregion: c.subregion || '—',
+      capital: (c.capital || []).join(', ') || '—',
+      population: c.population ?? 0,
+      area: c.area ?? 0,
+      languages: Object.values(b.languages || {}).join(', ') || '—',
+      currencies: Object.values(b.currencies || {}).map(cur => cur.name).join(', ') || '—',
+      timezones: (b.timezones || []).join(', ') || '—',
+      independent: c.independent === true ? true : c.independent === false ? false : null,
+      unMember: c.unMember === true ? true : c.unMember === false ? false : null,
+      callingCode,
+      tld: (b.tld || []).join(', ') || '—',
+      drivingSide: b.car?.side || '—',
+    }
+  })
 }
 
 function SortIcon({ dir }) {
@@ -149,16 +167,11 @@ export default function GridDemo() {
   // Expanded row
   const [expandedRow, setExpandedRow] = useState(null)
 
-  // Fetch data
+  // Fetch data — two parallel requests merged to stay within 10-field API limit
   useEffect(() => {
-    const fields = 'name,flags,region,subregion,capital,population,area,languages,currencies,timezones,independent,unMember,idd,tld,car'
-    fetch(`https://restcountries.com/v3.1/all?fields=${fields}`)
-      .then(r => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        return r.json()
-      })
+    fetchCountries()
       .then(data => {
-        setCountries(data.map(transformCountry))
+        setCountries(data)
         setLoading(false)
       })
       .catch(err => {
