@@ -451,7 +451,7 @@ export default function GridDemo() {
                         key={col.key}
                         onClick={() => handleSort(col)}
                         className={`px-3 pt-3 pb-1 font-semibold whitespace-nowrap select-none transition-colors
-                          ${col.noSort ? '' : 'cursor-pointer hover:bg-[#16305a]'}
+                          ${col.noSort ? '' : 'cursor-pointer hover:bg-[#16305a] active:bg-[#142d4a]'}
                           ${col.align === 'right' ? 'text-right' : 'text-left'}`}
                       >
                         <span className="inline-flex items-center gap-0.5">
