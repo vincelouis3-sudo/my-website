@@ -7,6 +7,7 @@ const navLinks = [
   { to: '/advisor', label: 'Advisor View' },
   { to: '/back-office', label: 'Back Office' },
   { to: '/executive', label: 'Executive View' },
+  { to: '/crypto', label: '₿ Crypto' },
 ]
 
 export default function Navbar() {
