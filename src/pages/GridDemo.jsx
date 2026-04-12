@@ -194,8 +194,7 @@ export default function GridDemo() {
   const [loading,      setLoading]      = useState(true)
   const [error,        setError]        = useState(null)
   const [colFilters,   setColFilters]   = useState({})
-  const [sortKey,      setSortKey]      = useState('commonName')
-  const [sortDir,      setSortDir]      = useState('asc')
+  const [sort, setSort] = useState({ key: 'commonName', dir: 'asc' })
   const [page,         setPage]         = useState(1)
   const [visibleCols,  setVisibleCols]  = useState(() =>
     ALL_COLUMNS.reduce((acc, col) => ({ ...acc, [col.key]: true }), {})
@@ -237,29 +236,31 @@ export default function GridDemo() {
         })
       )
       .sort((a, b) => {
-        const av = a[sortKey], bv = b[sortKey]
+        if (!sort.key) return 0
+        const av = a[sort.key], bv = b[sort.key]
         if (typeof av === 'number' && typeof bv === 'number') {
-          return sortDir === 'asc' ? av - bv : bv - av
+          return sort.dir === 'asc' ? av - bv : bv - av
         }
         const as = String(av ?? '').toLowerCase()
         const bs = String(bv ?? '').toLowerCase()
-        if (as < bs) return sortDir === 'asc' ? -1 : 1
-        if (as > bs) return sortDir === 'asc' ?  1 : -1
+        if (as < bs) return sort.dir === 'asc' ? -1 : 1
+        if (as > bs) return sort.dir === 'asc' ?  1 : -1
         return 0
       })
-  }, [countries, colFilters, sortKey, sortDir])
+  }, [countries, colFilters, sort])
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const safePage   = Math.min(page, totalPages)
   const startIdx   = (safePage - 1) * PAGE_SIZE
   const paginated  = filtered.slice(startIdx, startIdx + PAGE_SIZE)
 
+  // Cycles: no sort → asc → desc → no sort
   const handleSort = useCallback((col) => {
     if (col.noSort) return
-    setSortKey(prev => {
-      if (prev === col.key) { setSortDir(d => d === 'asc' ? 'desc' : 'asc'); return col.key }
-      setSortDir('asc')
-      return col.key
+    setSort(prev => {
+      if (prev.key !== col.key) return { key: col.key, dir: 'asc' }
+      if (prev.dir === 'asc')   return { key: col.key, dir: 'desc' }
+      return { key: null, dir: 'asc' }   // third click clears sort
     })
     setPage(1)
     setExpandedRow(null)
@@ -455,7 +456,7 @@ export default function GridDemo() {
                       >
                         <span className="inline-flex items-center gap-0.5">
                           {col.label}
-                          {!col.noSort && <SortIcon dir={sortKey === col.key ? sortDir : null} />}
+                          {!col.noSort && <SortIcon dir={sort.key === col.key ? sort.dir : null} />}
                         </span>
                       </th>
                     ))}
