@@ -7,7 +7,7 @@ export const clientData = {
     todayGainPct: 0.26,
     ytdReturn: 8.4,
     annualizedReturn: 6.2,
-    lastUpdated: "April 11, 2024"
+    lastUpdated: "April 12, 2026"
   },
   assetAllocation: [
     { name: "US Equities", value: 45, amount: 561825 },
@@ -43,10 +43,10 @@ export const clientData = {
       { date: "Apr 11", value: 1248500 }
     ],
     "1Y": [
-      { date: "Apr 23", value: 1050000 }, { date: "Jun 23", value: 1070000 },
-      { date: "Aug 23", value: 1060000 }, { date: "Oct 23", value: 1080000 },
-      { date: "Dec 23", value: 1120000 }, { date: "Feb 24", value: 1180000 },
-      { date: "Apr 24", value: 1248500 }
+      { date: "Apr 25", value: 1050000 }, { date: "Jun 25", value: 1070000 },
+      { date: "Aug 25", value: 1060000 }, { date: "Oct 25", value: 1080000 },
+      { date: "Dec 25", value: 1120000 }, { date: "Feb 26", value: 1180000 },
+      { date: "Apr 26", value: 1248500 }
     ]
   },
   benchmarkHistory: {
@@ -66,17 +66,17 @@ export const clientData = {
       { date: "Apr 11", value: 1238000 }
     ],
     "1Y": [
-      { date: "Apr 23", value: 1040000 }, { date: "Jun 23", value: 1060000 },
-      { date: "Aug 23", value: 1050000 }, { date: "Oct 23", value: 1070000 },
-      { date: "Dec 23", value: 1110000 }, { date: "Feb 24", value: 1170000 },
-      { date: "Apr 24", value: 1238000 }
+      { date: "Apr 25", value: 1040000 }, { date: "Jun 25", value: 1060000 },
+      { date: "Aug 25", value: 1050000 }, { date: "Oct 25", value: 1070000 },
+      { date: "Dec 25", value: 1110000 }, { date: "Feb 26", value: 1170000 },
+      { date: "Apr 26", value: 1238000 }
     ]
   },
   recentTransactions: [
-    { date: "Apr 10, 2024", type: "Buy", security: "Apple Inc.", ticker: "AAPL", shares: 10, price: 188.50, amount: 1885 },
-    { date: "Apr 8, 2024", type: "Dividend", security: "Vanguard Total Bond", ticker: "BND", shares: 0, price: 0, amount: 146.40 },
-    { date: "Apr 5, 2024", type: "Sell", security: "Tesla Inc.", ticker: "TSLA", shares: 15, price: 175.20, amount: 2628 },
-    { date: "Apr 2, 2024", type: "Buy", security: "Microsoft Corp.", ticker: "MSFT", shares: 5, price: 412.80, amount: 2064 },
-    { date: "Mar 28, 2024", type: "Dividend", security: "SPDR S&P 500 ETF", ticker: "SPY", shares: 0, price: 0, amount: 207.44 }
+    { date: "Apr 10, 2026", type: "Buy", security: "Apple Inc.", ticker: "AAPL", shares: 10, price: 188.50, amount: 1885 },
+    { date: "Apr 8, 2026", type: "Dividend", security: "Vanguard Total Bond", ticker: "BND", shares: 0, price: 0, amount: 146.40 },
+    { date: "Apr 5, 2026", type: "Sell", security: "Tesla Inc.", ticker: "TSLA", shares: 15, price: 175.20, amount: 2628 },
+    { date: "Apr 2, 2026", type: "Buy", security: "Microsoft Corp.", ticker: "MSFT", shares: 5, price: 412.80, amount: 2064 },
+    { date: "Mar 28, 2026", type: "Dividend", security: "SPDR S&P 500 ETF", ticker: "SPY", shares: 0, price: 0, amount: 207.44 }
   ]
 }

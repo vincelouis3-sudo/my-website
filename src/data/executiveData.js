@@ -1,5 +1,5 @@
 export const executiveData = {
-  executive: { name: "Patricia Wells", title: "Chief Executive Officer", firm: "Pinnacle Wealth Management", healthScore: 87, lastUpdated: "April 11, 2024 9:00 AM" },
+  executive: { name: "Patricia Wells", title: "Chief Executive Officer", firm: "Pinnacle Wealth Management", healthScore: 87, lastUpdated: "April 12, 2026 9:00 AM" },
   kpis: [
     { label: "Total AUM", value: "$4.2B", change: 3.2, trend: "up" },
     { label: "Total Clients", value: "1,847", change: 2.1, trend: "up" },
@@ -10,23 +10,23 @@ export const executiveData = {
   ],
   aumHistory: {
     "1Y": [
-      { date: "May 23", aum: 3600, benchmark: 3500 }, { date: "Jun 23", aum: 3650, benchmark: 3520 },
-      { date: "Jul 23", aum: 3700, benchmark: 3560 }, { date: "Aug 23", aum: 3680, benchmark: 3540 },
-      { date: "Sep 23", aum: 3750, benchmark: 3580 }, { date: "Oct 23", aum: 3800, benchmark: 3610 },
-      { date: "Nov 23", aum: 3900, benchmark: 3650 }, { date: "Dec 23", aum: 3980, benchmark: 3700 },
-      { date: "Jan 24", aum: 4050, benchmark: 3750 }, { date: "Feb 24", aum: 4100, benchmark: 3790 },
-      { date: "Mar 24", aum: 4150, benchmark: 3820 }, { date: "Apr 24", aum: 4200, benchmark: 3850 }
+      { date: "May 25", aum: 3600, benchmark: 3500 }, { date: "Jun 25", aum: 3650, benchmark: 3520 },
+      { date: "Jul 25", aum: 3700, benchmark: 3560 }, { date: "Aug 25", aum: 3680, benchmark: 3540 },
+      { date: "Sep 25", aum: 3750, benchmark: 3580 }, { date: "Oct 25", aum: 3800, benchmark: 3610 },
+      { date: "Nov 25", aum: 3900, benchmark: 3650 }, { date: "Dec 25", aum: 3980, benchmark: 3700 },
+      { date: "Jan 26", aum: 4050, benchmark: 3750 }, { date: "Feb 26", aum: 4100, benchmark: 3790 },
+      { date: "Mar 26", aum: 4150, benchmark: 3820 }, { date: "Apr 26", aum: 4200, benchmark: 3850 }
     ],
     "3Y": [
-      { date: "Apr 21", aum: 2800, benchmark: 2700 }, { date: "Oct 21", aum: 3000, benchmark: 2900 },
-      { date: "Apr 22", aum: 3100, benchmark: 2950 }, { date: "Oct 22", aum: 3200, benchmark: 3000 },
-      { date: "Apr 23", aum: 3500, benchmark: 3300 }, { date: "Oct 23", aum: 3800, benchmark: 3600 },
-      { date: "Apr 24", aum: 4200, benchmark: 3850 }
+      { date: "Apr 23", aum: 2800, benchmark: 2700 }, { date: "Oct 23", aum: 3000, benchmark: 2900 },
+      { date: "Apr 24", aum: 3100, benchmark: 2950 }, { date: "Oct 24", aum: 3200, benchmark: 3000 },
+      { date: "Apr 25", aum: 3500, benchmark: 3300 }, { date: "Oct 25", aum: 3800, benchmark: 3600 },
+      { date: "Apr 26", aum: 4200, benchmark: 3850 }
     ],
     "5Y": [
-      { date: "Apr 19", aum: 2100, benchmark: 2000 }, { date: "Apr 20", aum: 2300, benchmark: 2200 },
-      { date: "Apr 21", aum: 2800, benchmark: 2700 }, { date: "Apr 22", aum: 3100, benchmark: 2950 },
-      { date: "Apr 23", aum: 3500, benchmark: 3300 }, { date: "Apr 24", aum: 4200, benchmark: 3850 }
+      { date: "Apr 21", aum: 2100, benchmark: 2000 }, { date: "Apr 22", aum: 2300, benchmark: 2200 },
+      { date: "Apr 23", aum: 2800, benchmark: 2700 }, { date: "Apr 24", aum: 3100, benchmark: 2950 },
+      { date: "Apr 25", aum: 3500, benchmark: 3300 }, { date: "Apr 26", aum: 4200, benchmark: 3850 }
     ]
   },
   advisorLeaderboard: [

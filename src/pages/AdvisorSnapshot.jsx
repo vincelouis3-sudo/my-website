@@ -93,10 +93,10 @@ export default function AdvisorSnapshot() {
 
   const quarterlyRevenue = useMemo(() => {
     const quarters = [
-      { quarter: 'Q2 2023', months: ['May', 'Jun', 'Jul'] },
-      { quarter: 'Q3 2023', months: ['Aug', 'Sep', 'Oct'] },
-      { quarter: 'Q4 2023', months: ['Nov', 'Dec', 'Jan'] },
-      { quarter: 'Q1 2024', months: ['Feb', 'Mar', 'Apr'] },
+      { quarter: 'Q2 2025', months: ['May', 'Jun', 'Jul'] },
+      { quarter: 'Q3 2025', months: ['Aug', 'Sep', 'Oct'] },
+      { quarter: 'Q4 2025', months: ['Nov', 'Dec', 'Jan'] },
+      { quarter: 'Q1 2026', months: ['Feb', 'Mar', 'Apr'] },
     ]
     return quarters.map(({ quarter, months }) => {
       const rows = monthlyRevenue.filter((r) => months.includes(r.month))

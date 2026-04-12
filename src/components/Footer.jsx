@@ -6,7 +6,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center gap-2 text-sm">
             <span className="font-semibold text-white">Pinnacle Wealth Management</span>
             <span className="hidden md:inline text-blue-300">|</span>
-            <span className="text-blue-200">&copy; 2024 All rights reserved.</span>
+            <span className="text-blue-200">&copy; 2026 All rights reserved.</span>
           </div>
           <div className="flex items-center gap-6 text-sm">
             <a

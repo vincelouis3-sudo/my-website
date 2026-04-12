@@ -1,22 +1,22 @@
 export const backOfficeData = {
-  user: { name: "Jamie Park", role: "Operations Analyst", team: "Wealth Ops", date: "April 11, 2024" },
+  user: { name: "Jamie Park", role: "Operations Analyst", team: "Wealth Ops", date: "April 12, 2026" },
   nextBestActions: [
-    { id: 1, priority: "Critical", title: "Resolve failed trade settlement - ACC-00293", dueDate: "2024-04-11T12:00:00", category: "Trade" },
-    { id: 2, priority: "Critical", title: "Escalate margin call for account ACC-00817", dueDate: "2024-04-11T11:00:00", category: "Risk" },
-    { id: 3, priority: "High", title: "Complete KYC review for new client Robert Chen", dueDate: "2024-04-11T17:00:00", category: "Onboarding" },
-    { id: 4, priority: "High", title: "Process 3 pending wire transfer approvals", dueDate: "2024-04-11T16:00:00", category: "Operations" },
-    { id: 5, priority: "High", title: "Review 5 flagged compliance alerts from yesterday", dueDate: "2024-04-11T15:00:00", category: "Compliance" },
-    { id: 6, priority: "Medium", title: "Update beneficiary for account ACC-00341", dueDate: "2024-04-12T12:00:00", category: "Account Maintenance" },
-    { id: 7, priority: "Medium", title: "Send quarterly statement to 12 clients", dueDate: "2024-04-12T17:00:00", category: "Communications" },
-    { id: 8, priority: "Medium", title: "Reconcile end-of-day position discrepancy", dueDate: "2024-04-12T09:00:00", category: "Operations" }
+    { id: 1, priority: "Critical", title: "Resolve failed trade settlement - ACC-00293", dueDate: "2026-04-12T12:00:00", category: "Trade" },
+    { id: 2, priority: "Critical", title: "Escalate margin call for account ACC-00817", dueDate: "2026-04-12T11:00:00", category: "Risk" },
+    { id: 3, priority: "High", title: "Complete KYC review for new client Robert Chen", dueDate: "2026-04-12T17:00:00", category: "Onboarding" },
+    { id: 4, priority: "High", title: "Process 3 pending wire transfer approvals", dueDate: "2026-04-12T16:00:00", category: "Operations" },
+    { id: 5, priority: "High", title: "Review 5 flagged compliance alerts from yesterday", dueDate: "2026-04-12T15:00:00", category: "Compliance" },
+    { id: 6, priority: "Medium", title: "Update beneficiary for account ACC-00341", dueDate: "2026-04-13T12:00:00", category: "Account Maintenance" },
+    { id: 7, priority: "Medium", title: "Send quarterly statement to 12 clients", dueDate: "2026-04-13T17:00:00", category: "Communications" },
+    { id: 8, priority: "Medium", title: "Reconcile end-of-day position discrepancy", dueDate: "2026-04-13T09:00:00", category: "Operations" }
   ],
   alerts: [
-    { id: 1, severity: "Error", message: "Trade settlement failed for ACC-00293 — requires immediate action", timestamp: "2024-04-11T09:15:00" },
-    { id: 2, severity: "Error", message: "Margin call triggered on account ACC-00817", timestamp: "2024-04-11T08:47:00" },
-    { id: 3, severity: "Warning", message: "Client Sarah Johnson has not been contacted in 90 days", timestamp: "2024-04-11T08:00:00" },
-    { id: 4, severity: "Warning", message: "3 accounts have missing required documentation", timestamp: "2024-04-10T17:30:00" },
-    { id: 5, severity: "Warning", message: "Unusual transaction volume detected on ACC-00552", timestamp: "2024-04-10T15:20:00" },
-    { id: 6, severity: "Info", message: "End-of-day reconciliation completed with 1 discrepancy", timestamp: "2024-04-10T18:00:00" }
+    { id: 1, severity: "Error", message: "Trade settlement failed for ACC-00293 — requires immediate action", timestamp: "2026-04-12T09:15:00" },
+    { id: 2, severity: "Error", message: "Margin call triggered on account ACC-00817", timestamp: "2026-04-12T08:47:00" },
+    { id: 3, severity: "Warning", message: "Client Sarah Johnson has not been contacted in 90 days", timestamp: "2026-04-12T08:00:00" },
+    { id: 4, severity: "Warning", message: "3 accounts have missing required documentation", timestamp: "2026-04-11T17:30:00" },
+    { id: 5, severity: "Warning", message: "Unusual transaction volume detected on ACC-00552", timestamp: "2026-04-11T15:20:00" },
+    { id: 6, severity: "Info", message: "End-of-day reconciliation completed with 1 discrepancy", timestamp: "2026-04-11T18:00:00" }
   ],
   taskQueue: [
     { label: "Pending Review", count: 12, color: "blue" },
