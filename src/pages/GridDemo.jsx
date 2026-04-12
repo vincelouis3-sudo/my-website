@@ -437,20 +437,8 @@ export default function GridDemo() {
           </div>
         )}
 
-        {/* No results */}
-        {!loading && !error && filtered.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-32 gap-4 text-center">
-            <span className="text-5xl">🔍</span>
-            <h3 className="text-lg font-bold text-gray-700">No countries match your filters</h3>
-            <p className="text-gray-500 text-sm">Try adjusting or clearing your column filters.</p>
-            <button onClick={clearFilters} className="mt-2 px-5 py-2.5 rounded-lg bg-[#1e3a5f] text-white text-sm font-medium hover:bg-[#16305a] transition-colors">
-              Clear Filters
-            </button>
-          </div>
-        )}
-
         {/* Grid */}
-        {!loading && !error && filtered.length > 0 && (
+        {!loading && !error && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -482,39 +470,57 @@ export default function GridDemo() {
                   </tr>
                 </thead>
                 <tbody>
-                  {paginated.map((row, idx) => {
-                    const isExpanded = expandedRow === row.commonName
-                    const isEven     = idx % 2 === 0
-                    return [
-                      <tr
-                        key={row.commonName}
-                        onClick={() => setExpandedRow(isExpanded ? null : row.commonName)}
-                        className={`cursor-pointer transition-colors duration-100 ${
-                          isExpanded
-                            ? 'bg-blue-100 border-l-4 border-l-[#1e3a5f]'
-                            : isEven
-                              ? 'bg-white hover:bg-blue-50'
-                              : 'bg-gray-50 hover:bg-blue-50'
-                        }`}
-                      >
-                        {activeCols.map(col => (
-                          <td
-                            key={col.key}
-                            className={`px-3 py-2.5 border-b border-gray-100 ${col.align === 'right' ? 'text-right' : ''}`}
+                  {filtered.length === 0 ? (
+                    <tr>
+                      <td colSpan={100} className="py-20 text-center">
+                        <div className="flex flex-col items-center gap-3">
+                          <span className="text-4xl">🔍</span>
+                          <p className="text-gray-700 font-semibold">No countries match your filters</p>
+                          <p className="text-gray-400 text-sm">Edit the filter inputs above or clear them all.</p>
+                          <button
+                            onClick={clearFilters}
+                            className="mt-1 px-4 py-2 rounded-lg bg-[#1e3a5f] text-white text-sm font-medium hover:bg-[#16305a] transition-colors"
                           >
-                            {renderCell(col, row)}
-                          </td>
-                        ))}
-                      </tr>,
-                      isExpanded && (
-                        <DetailPanel
-                          key={`${row.commonName}-detail`}
-                          country={row}
-                          onClose={() => setExpandedRow(null)}
-                        />
-                      ),
-                    ]
-                  })}
+                            Clear All Filters
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    paginated.map((row, idx) => {
+                      const isExpanded = expandedRow === row.commonName
+                      const isEven     = idx % 2 === 0
+                      return [
+                        <tr
+                          key={row.commonName}
+                          onClick={() => setExpandedRow(isExpanded ? null : row.commonName)}
+                          className={`cursor-pointer transition-colors duration-100 ${
+                            isExpanded
+                              ? 'bg-blue-100 border-l-4 border-l-[#1e3a5f]'
+                              : isEven
+                                ? 'bg-white hover:bg-blue-50'
+                                : 'bg-gray-50 hover:bg-blue-50'
+                          }`}
+                        >
+                          {activeCols.map(col => (
+                            <td
+                              key={col.key}
+                              className={`px-3 py-2.5 border-b border-gray-100 ${col.align === 'right' ? 'text-right' : ''}`}
+                            >
+                              {renderCell(col, row)}
+                            </td>
+                          ))}
+                        </tr>,
+                        isExpanded && (
+                          <DetailPanel
+                            key={`${row.commonName}-detail`}
+                            country={row}
+                            onClose={() => setExpandedRow(null)}
+                          />
+                        ),
+                      ]
+                    })
+                  )}
                 </tbody>
               </table>
             </div>
@@ -522,14 +528,23 @@ export default function GridDemo() {
             {/* Footer / pagination */}
             <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3">
               <span className="text-xs text-gray-500">
-                Rows{' '}
-                <strong>{(startIdx + 1).toLocaleString()}–{Math.min(startIdx + PAGE_SIZE, filtered.length).toLocaleString()}</strong>
-                {' '}of{' '}
-                <strong>{filtered.length.toLocaleString()}</strong>
-                {hasFilters && ` (filtered from ${countries.length.toLocaleString()})`}
+                {filtered.length === 0 ? (
+                  <>
+                    <strong>0</strong> results
+                    {hasFilters && ` (filtered from ${countries.length.toLocaleString()})`}
+                  </>
+                ) : (
+                  <>
+                    Rows{' '}
+                    <strong>{(startIdx + 1).toLocaleString()}–{Math.min(startIdx + PAGE_SIZE, filtered.length).toLocaleString()}</strong>
+                    {' '}of{' '}
+                    <strong>{filtered.length.toLocaleString()}</strong>
+                    {hasFilters && ` (filtered from ${countries.length.toLocaleString()})`}
+                  </>
+                )}
               </span>
 
-              <Pagination page={safePage} totalPages={totalPages} onChange={handlePageChange} />
+              {filtered.length > 0 && <Pagination page={safePage} totalPages={totalPages} onChange={handlePageChange} />}
 
               <a
                 href="https://restcountries.com"
