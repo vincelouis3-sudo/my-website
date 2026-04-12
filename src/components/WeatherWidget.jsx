@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY
 
-// Map OWM weather condition IDs to a background gradient + emoji
 function getWeatherStyle(weatherId) {
   if (weatherId >= 200 && weatherId < 300) return { gradient: 'from-gray-800 via-purple-900 to-gray-900', emoji: '⛈️', label: 'Thunderstorm' }
   if (weatherId >= 300 && weatherId < 400) return { gradient: 'from-slate-600 via-blue-700 to-slate-700', emoji: '🌦️', label: 'Drizzle' }
@@ -32,7 +31,7 @@ function StatPill({ icon, label, value }) {
 
 export default function WeatherWidget() {
   const [query, setQuery] = useState('')
-  const [status, setStatus] = useState('idle') // idle | loading | success | error
+  const [status, setStatus] = useState('idle')
   const [weather, setWeather] = useState(null)
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -49,7 +48,6 @@ export default function WeatherWidget() {
     }
 
     try {
-      // Detect zip code (US 5-digit) vs city name
       const isZip = /^\d{5}$/.test(query.trim())
       const param = isZip
         ? `zip=${encodeURIComponent(query.trim())},US`
@@ -60,9 +58,7 @@ export default function WeatherWidget() {
       )
       const data = await res.json()
 
-      if (!res.ok || data.cod !== 200) {
-        throw new Error(data.message || 'Location not found')
-      }
+      if (!res.ok || data.cod !== 200) throw new Error(data.message || 'Location not found')
 
       setWeather(data)
       setStatus('success')
@@ -79,17 +75,15 @@ export default function WeatherWidget() {
   const style = weather ? getWeatherStyle(weather.weather[0].id) : null
 
   return (
-    <section className="bg-white py-20 px-6">
+    <section className="bg-white dark:bg-gray-800 py-20 px-6 transition-colors duration-200">
       <div className="max-w-2xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-[#1e3a5f] mb-3">Live Weather</h2>
-          <p className="text-gray-500 text-lg">
+          <h2 className="text-3xl font-bold text-[#1e3a5f] dark:text-blue-300 mb-3">Live Weather</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-lg">
             Enter a city, state, or zip code to pull current conditions.
           </p>
         </div>
 
-        {/* Search bar */}
         <div className="flex gap-3 mb-8">
           <input
             type="text"
@@ -97,7 +91,7 @@ export default function WeatherWidget() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="e.g. New York, NY  or  10001"
-            className="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm text-sm"
+            className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-700 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm text-sm"
           />
           <button
             onClick={fetchWeather}
@@ -123,10 +117,8 @@ export default function WeatherWidget() {
           </button>
         </div>
 
-        {/* ── SUCCESS STATE ── */}
         {status === 'success' && weather && (
           <div className={`rounded-2xl bg-gradient-to-br ${style.gradient} shadow-2xl overflow-hidden`}>
-            {/* Top: location + main temp */}
             <div className="px-8 pt-8 pb-4 flex items-start justify-between gap-4">
               <div>
                 <p className="text-white/70 text-sm font-medium uppercase tracking-widest mb-1">
@@ -147,8 +139,6 @@ export default function WeatherWidget() {
                 />
               </div>
             </div>
-
-            {/* Giant temperature */}
             <div className="px-8 pb-2">
               <div className="text-white font-black leading-none" style={{ fontSize: '5rem' }}>
                 {Math.round(weather.main.temp)}°
@@ -160,8 +150,6 @@ export default function WeatherWidget() {
                 H:{Math.round(weather.main.temp_max)}° &nbsp;L:{Math.round(weather.main.temp_min)}°
               </p>
             </div>
-
-            {/* Stat pills */}
             <div className="px-8 py-6">
               <div className="flex flex-wrap gap-3">
                 <StatPill icon="💧" label="Humidity" value={`${weather.main.humidity}%`} />
@@ -175,8 +163,6 @@ export default function WeatherWidget() {
                 )}
               </div>
             </div>
-
-            {/* Footer */}
             <div className="px-8 py-3 bg-black/20 text-white/50 text-xs flex justify-between">
               <span>Data via OpenWeatherMap</span>
               <span>Updated just now</span>
@@ -184,26 +170,23 @@ export default function WeatherWidget() {
           </div>
         )}
 
-        {/* ── ERROR STATE ── */}
         {status === 'error' && (
-          <div className="rounded-2xl border-2 border-red-100 bg-red-50 overflow-hidden shadow-md text-center">
-            <div className="relative h-48 overflow-hidden bg-red-100">
+          <div className="rounded-2xl border-2 border-red-100 dark:border-red-800 bg-red-50 dark:bg-red-900/20 overflow-hidden shadow-md text-center">
+            <div className="relative h-48 overflow-hidden bg-red-100 dark:bg-red-900/30">
               <img
                 src="https://placedog.net/600/300?id=23"
                 alt="Sad dog"
                 className="w-full h-full object-cover opacity-80"
-                onError={(e) => {
-                  e.target.src = 'https://placedog.net/600/300?random'
-                }}
+                onError={(e) => { e.target.src = 'https://placedog.net/600/300?random' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-red-50 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-red-50 dark:from-red-900/20 via-transparent to-transparent" />
             </div>
             <div className="px-8 py-6">
               <p className="text-4xl mb-3">😟</p>
-              <h3 className="text-xl font-bold text-red-700 mb-2">Uh oh, something went wrong.</h3>
-              <p className="text-red-500 text-sm mb-1">Please refresh or try again later.</p>
+              <h3 className="text-xl font-bold text-red-700 dark:text-red-400 mb-2">Uh oh, something went wrong.</h3>
+              <p className="text-red-500 dark:text-red-400 text-sm mb-1">Please refresh or try again later.</p>
               {errorMsg && (
-                <p className="text-red-400 text-xs mt-3 font-mono bg-red-100 rounded px-3 py-2 inline-block">
+                <p className="text-red-400 dark:text-red-300 text-xs mt-3 font-mono bg-red-100 dark:bg-red-900/40 rounded px-3 py-2 inline-block">
                   {errorMsg}
                 </p>
               )}
@@ -211,9 +194,8 @@ export default function WeatherWidget() {
           </div>
         )}
 
-        {/* ── IDLE STATE hint ── */}
         {status === 'idle' && (
-          <div className="text-center text-gray-400 text-sm py-4">
+          <div className="text-center text-gray-400 dark:text-gray-500 text-sm py-4">
             <span className="text-2xl block mb-2">🌤️</span>
             Enter a location above and hit <strong>Load Weather</strong> to get started.
           </div>

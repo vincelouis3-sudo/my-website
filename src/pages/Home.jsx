@@ -17,8 +17,8 @@ const features = [
     title: 'Client View',
     description: 'A full portfolio dashboard with real-time performance, asset allocation, holdings, and transaction history — all designed for clarity.',
     color: 'border-blue-500',
-    bg: 'bg-blue-50',
-    iconBg: 'bg-blue-100',
+    bg: 'bg-blue-50 dark:bg-blue-900/20',
+    iconBg: 'bg-blue-100 dark:bg-blue-800/40',
   },
   {
     to: '/advisor',
@@ -26,8 +26,8 @@ const features = [
     title: 'Advisor View',
     description: 'Book-of-business management with client tables, revenue tracking, AUM breakdown, and at-risk client alerts.',
     color: 'border-purple-500',
-    bg: 'bg-purple-50',
-    iconBg: 'bg-purple-100',
+    bg: 'bg-purple-50 dark:bg-purple-900/20',
+    iconBg: 'bg-purple-100 dark:bg-purple-800/40',
   },
   {
     to: '/back-office',
@@ -35,8 +35,8 @@ const features = [
     title: 'Back Office',
     description: 'Operations command center — action queues, compliance alerts, onboarding pipeline, and real-time activity feeds.',
     color: 'border-amber-500',
-    bg: 'bg-amber-50',
-    iconBg: 'bg-amber-100',
+    bg: 'bg-amber-50 dark:bg-amber-900/20',
+    iconBg: 'bg-amber-100 dark:bg-amber-800/40',
   },
   {
     to: '/executive',
@@ -44,8 +44,8 @@ const features = [
     title: 'Executive View',
     description: 'C-suite intelligence: firm-wide KPIs, AUM trends, advisor leaderboard, business mix, and strategic risk overview.',
     color: 'border-emerald-500',
-    bg: 'bg-emerald-50',
-    iconBg: 'bg-emerald-100',
+    bg: 'bg-emerald-50 dark:bg-emerald-900/20',
+    iconBg: 'bg-emerald-100 dark:bg-emerald-800/40',
   },
 ]
 
@@ -57,7 +57,6 @@ export default function Home() {
         className="relative flex flex-col items-center justify-center text-center px-6 py-32 md:py-44"
         style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2848 50%, #1a4a7a 100%)' }}
       >
-        {/* Subtle grid overlay */}
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -114,11 +113,11 @@ export default function Home() {
       </section>
 
       {/* Feature Cards */}
-      <section className="bg-white py-20 px-6">
+      <section className="bg-white dark:bg-gray-900 py-20 px-6 transition-colors duration-200">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#1e3a5f] mb-3">Explore the Platform</h2>
-            <p className="text-gray-500 text-lg max-w-xl mx-auto">
+            <h2 className="text-3xl font-bold text-[#1e3a5f] dark:text-blue-300 mb-3">Explore the Platform</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-lg max-w-xl mx-auto">
               Four purpose-built dashboards, each tailored to a distinct role in the wealth management ecosystem.
             </p>
           </div>
@@ -131,11 +130,11 @@ export default function Home() {
                 <div className={`w-12 h-12 rounded-xl ${f.iconBg} flex items-center justify-center text-2xl mb-4`}>
                   {f.icon}
                 </div>
-                <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">{f.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1">{f.description}</p>
+                <h3 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300 mb-2">{f.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex-1">{f.description}</p>
                 <Link
                   to={f.to}
-                  className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#1e3a5f] hover:underline group-hover:gap-2 transition-all duration-150"
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#1e3a5f] dark:text-blue-300 hover:underline group-hover:gap-2 transition-all duration-150"
                 >
                   View Demo
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,19 +151,19 @@ export default function Home() {
       <WeatherWidget />
 
       {/* Pet Gallery */}
-      <section className="bg-gray-50 py-20 px-6">
+      <section className="bg-gray-50 dark:bg-gray-900 py-20 px-6 transition-colors duration-200">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#1e3a5f] mb-3">Meet Our Office Pets</h2>
-            <p className="text-gray-500 text-lg">A little fun in a world of finance.</p>
+            <h2 className="text-3xl font-bold text-[#1e3a5f] dark:text-blue-300 mb-3">Meet Our Office Pets</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-lg">A little fun in a world of finance.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {pets.map((pet) => (
               <div
                 key={pet.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-default"
+                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-default"
               >
-                <div className="relative h-52 bg-gray-100 overflow-hidden">
+                <div className="relative h-52 bg-gray-100 dark:bg-gray-700 overflow-hidden">
                   <img
                     src={pet.img}
                     alt={pet.name}
@@ -175,7 +174,7 @@ export default function Home() {
                     }}
                   />
                   <div
-                    className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100"
+                    className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900"
                     style={{ display: 'none' }}
                   >
                     <span className="text-5xl">{pet.type.includes('Cat') ? '🐱' : '🐶'}</span>
@@ -183,12 +182,12 @@ export default function Home() {
                 </div>
                 <div className="p-5">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-bold text-[#1e3a5f]">{pet.name}</h3>
-                    <span className="text-xs font-medium bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full">
+                    <h3 className="text-xl font-bold text-[#1e3a5f] dark:text-blue-300">{pet.name}</h3>
+                    <span className="text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2.5 py-1 rounded-full">
                       {pet.type}
                     </span>
                   </div>
-                  <p className="text-gray-500 text-sm italic leading-relaxed">"{pet.fact}"</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm italic leading-relaxed">"{pet.fact}"</p>
                 </div>
               </div>
             ))}
