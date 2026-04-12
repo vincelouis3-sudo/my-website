@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import WeatherWidget from '../components/WeatherWidget'
 
 const pets = [
   { id: 1, name: "Biscuit", type: "Golden Retriever", fact: "Loves to shred financial reports — only the bearish ones.", img: "https://placedog.net/400/300?id=1" },
@@ -146,6 +147,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Weather Widget */}
+      <WeatherWidget />
 
       {/* Pet Gallery */}
       <section className="bg-gray-50 py-20 px-6">
