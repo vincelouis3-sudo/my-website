@@ -6,9 +6,9 @@ export function DarkModeProvider({ children }) {
   const [isDark, setIsDark] = useState(() => {
     try {
       const saved = localStorage.getItem('darkMode')
-      if (saved !== null) return JSON.parse(saved)
+      if (saved !== null) return JSON.parse(saved) === true
     } catch {}
-    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+    return false   // default to light mode
   })
 
   useEffect(() => {
