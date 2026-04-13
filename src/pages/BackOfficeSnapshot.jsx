@@ -6,23 +6,23 @@ import {
 import { backOfficeData } from '../data/backOfficeData.js'
 
 const priorityStyles = {
-  Critical: 'bg-red-100 text-red-700 border border-red-200',
-  High: 'bg-amber-100 text-amber-700 border border-amber-200',
-  Medium: 'bg-blue-100 text-blue-700 border border-blue-200',
+  Critical: 'bg-red-100 text-red-700 border border-red-200 dark:bg-red-900/50 dark:text-red-300 dark:border-red-800',
+  High: 'bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/50 dark:text-amber-300 dark:border-amber-800',
+  Medium: 'bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-800',
 }
 
 const severityStyles = {
-  Error: { dot: 'bg-red-500', card: 'border-l-4 border-red-400 bg-red-50', label: 'text-red-700' },
-  Warning: { dot: 'bg-amber-400', card: 'border-l-4 border-amber-400 bg-amber-50', label: 'text-amber-700' },
-  Info: { dot: 'bg-blue-400', card: 'border-l-4 border-blue-400 bg-blue-50', label: 'text-blue-700' },
+  Error:   { dot: 'bg-red-500',   card: 'border-l-4 border-red-400 bg-red-50 dark:bg-red-900/20',     label: 'text-red-700 dark:text-red-400' },
+  Warning: { dot: 'bg-amber-400', card: 'border-l-4 border-amber-400 bg-amber-50 dark:bg-amber-900/20', label: 'text-amber-700 dark:text-amber-400' },
+  Info:    { dot: 'bg-blue-400',  card: 'border-l-4 border-blue-400 bg-blue-50 dark:bg-blue-900/20',   label: 'text-blue-700 dark:text-blue-400' },
 }
 
 const taskColorMap = {
-  blue: { bg: 'bg-blue-50', text: 'text-blue-700', count: 'text-blue-600', border: 'border-blue-200' },
-  yellow: { bg: 'bg-yellow-50', text: 'text-yellow-700', count: 'text-yellow-600', border: 'border-yellow-200' },
-  orange: { bg: 'bg-orange-50', text: 'text-orange-700', count: 'text-orange-600', border: 'border-orange-200' },
-  green: { bg: 'bg-emerald-50', text: 'text-emerald-700', count: 'text-emerald-600', border: 'border-emerald-200' },
-  red: { bg: 'bg-red-50', text: 'text-red-700', count: 'text-red-600', border: 'border-red-200' },
+  blue:   { bg: 'bg-blue-50 dark:bg-blue-900/20',     text: 'text-blue-700 dark:text-blue-300',     count: 'text-blue-600 dark:text-blue-300',     border: 'border-blue-200 dark:border-blue-800' },
+  yellow: { bg: 'bg-yellow-50 dark:bg-yellow-900/20', text: 'text-yellow-700 dark:text-yellow-300', count: 'text-yellow-600 dark:text-yellow-300', border: 'border-yellow-200 dark:border-yellow-800' },
+  orange: { bg: 'bg-orange-50 dark:bg-orange-900/20', text: 'text-orange-700 dark:text-orange-300', count: 'text-orange-600 dark:text-orange-300', border: 'border-orange-200 dark:border-orange-800' },
+  green:  { bg: 'bg-emerald-50 dark:bg-emerald-900/20', text: 'text-emerald-700 dark:text-emerald-300', count: 'text-emerald-600 dark:text-emerald-300', border: 'border-emerald-200 dark:border-emerald-800' },
+  red:    { bg: 'bg-red-50 dark:bg-red-900/20',       text: 'text-red-700 dark:text-red-300',       count: 'text-red-600 dark:text-red-300',       border: 'border-red-200 dark:border-red-800' },
 }
 
 function fmtTime(iso) {
@@ -45,21 +45,13 @@ export default function BackOfficeSnapshot() {
   const warningAlerts = alerts.filter((a) => a.severity === 'Warning')
   const infoAlerts = alerts.filter((a) => a.severity === 'Info')
 
-  function markComplete(id) {
-    setActions((prev) => prev.filter((a) => a.id !== id))
-  }
-
-  function dismissAlert(id) {
-    setAlerts((prev) => prev.filter((a) => a.id !== id))
-  }
-
-  function acknowledgeAll() {
-    setAlerts([])
-  }
+  function markComplete(id) { setActions((prev) => prev.filter((a) => a.id !== id)) }
+  function dismissAlert(id) { setAlerts((prev) => prev.filter((a) => a.id !== id)) }
+  function acknowledgeAll() { setAlerts([]) }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header */}
+      {/* Header — dark navy, fine in both modes */}
       <div className="bg-[#1e3a5f] rounded-2xl p-6 text-white">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -71,9 +63,7 @@ export default function BackOfficeSnapshot() {
                 </span>
               )}
             </div>
-            <p className="text-blue-200 text-sm">
-              {user.role} · {user.team} · {user.date}
-            </p>
+            <p className="text-blue-200 text-sm">{user.role} · {user.team} · {user.date}</p>
           </div>
           <div className="flex items-center gap-3">
             <button className="relative p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition-colors">
@@ -105,13 +95,12 @@ export default function BackOfficeSnapshot() {
 
       {/* Two-panel layout */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        {/* Next Best Actions (60%) */}
-        <div className="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        {/* Next Best Actions */}
+        <div className="lg:col-span-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-[#1e3a5f]">Next Best Actions</h2>
-            <span className="text-xs text-gray-400">{actions.length} remaining</span>
+            <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300">Next Best Actions</h2>
+            <span className="text-xs text-gray-400 dark:text-gray-500">{actions.length} remaining</span>
           </div>
-          {/* Priority Tabs */}
           <div className="flex gap-1 mb-4">
             {PRIORITY_TABS.map((tab) => (
               <button
@@ -120,14 +109,12 @@ export default function BackOfficeSnapshot() {
                 className={`px-3 py-1 rounded-md text-xs font-semibold transition-colors ${
                   priorityTab === tab
                     ? 'bg-[#1e3a5f] text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
                 {tab}
                 {tab !== 'All' && (
-                  <span className="ml-1.5 opacity-70">
-                    ({actions.filter((a) => a.priority === tab).length})
-                  </span>
+                  <span className="ml-1.5 opacity-70">({actions.filter((a) => a.priority === tab).length})</span>
                 )}
               </button>
             ))}
@@ -137,26 +124,26 @@ export default function BackOfficeSnapshot() {
             <div className="text-center py-16 text-emerald-600">
               <div className="text-4xl mb-2">✓</div>
               <p className="font-semibold">All clear!</p>
-              <p className="text-sm text-gray-400 mt-1">No actions in this category.</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">No actions in this category.</p>
             </div>
           ) : (
             <div className="space-y-3">
               {filteredActions.map((action) => (
-                <div key={action.id} className="border border-gray-100 rounded-xl p-4 hover:border-gray-200 transition-colors">
+                <div key={action.id} className="border border-gray-100 dark:border-gray-700 rounded-xl p-4 hover:border-gray-200 dark:hover:border-gray-600 transition-colors">
                   <div className="flex items-start gap-3">
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${priorityStyles[action.priority]}`}>
                       {action.priority}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 leading-snug">{action.title}</p>
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-100 leading-snug">{action.title}</p>
                       <div className="flex items-center gap-3 mt-1.5">
-                        <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-md">{action.category}</span>
-                        <span className="text-xs text-gray-400">Due {fmtTime(action.dueDate)}</span>
+                        <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded-md">{action.category}</span>
+                        <span className="text-xs text-gray-400 dark:text-gray-500">Due {fmtTime(action.dueDate)}</span>
                       </div>
                     </div>
                     <button
                       onClick={() => markComplete(action.id)}
-                      className="shrink-0 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-lg hover:bg-emerald-100 transition-colors font-medium"
+                      className="shrink-0 text-xs bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-2.5 py-1 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors font-medium"
                     >
                       Done
                     </button>
@@ -167,15 +154,12 @@ export default function BackOfficeSnapshot() {
           )}
         </div>
 
-        {/* Alerts (40%) */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        {/* Alerts */}
+        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-[#1e3a5f]">System Alerts</h2>
+            <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300">System Alerts</h2>
             {alerts.length > 0 && (
-              <button
-                onClick={acknowledgeAll}
-                className="text-xs text-gray-400 hover:text-red-500 transition-colors"
-              >
+              <button onClick={acknowledgeAll} className="text-xs text-gray-400 dark:text-gray-500 hover:text-red-500 transition-colors">
                 Acknowledge All
               </button>
             )}
@@ -199,12 +183,12 @@ export default function BackOfficeSnapshot() {
                         <div className="flex items-start gap-2">
                           <span className={`mt-1 w-2 h-2 rounded-full shrink-0 ${severityStyles[alert.severity]?.dot}`} />
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs text-gray-700 leading-snug">{alert.message}</p>
-                            <p className="text-xs text-gray-400 mt-0.5">{fmtTime(alert.timestamp)}</p>
+                            <p className="text-xs text-gray-700 dark:text-gray-300 leading-snug">{alert.message}</p>
+                            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{fmtTime(alert.timestamp)}</p>
                           </div>
                           <button
                             onClick={() => dismissAlert(alert.id)}
-                            className="shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+                            className="shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                             title="Dismiss"
                           >
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -224,18 +208,14 @@ export default function BackOfficeSnapshot() {
 
       {/* Onboarding Pipeline + Activity Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Pipeline Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-bold text-[#1e3a5f] mb-4">Onboarding Pipeline</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300 mb-4">Onboarding Pipeline</h2>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={onboardingPipeline} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis dataKey="stage" tick={{ fontSize: 11 }} />
               <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
-              <Tooltip
-                formatter={(value, name) => [value, 'Clients']}
-                contentStyle={{ fontSize: 12 }}
-              />
+              <Tooltip formatter={(value) => [value, 'Clients']} contentStyle={{ fontSize: 12 }} />
               <Bar dataKey="count" name="Clients" radius={[4, 4, 0, 0]}>
                 {onboardingPipeline.map((entry, i) => (
                   <Cell key={i} fill={entry.color} />
@@ -245,7 +225,7 @@ export default function BackOfficeSnapshot() {
           </ResponsiveContainer>
           <div className="flex flex-wrap gap-3 mt-3">
             {onboardingPipeline.map((stage) => (
-              <div key={stage.stage} className="flex items-center gap-1.5 text-xs text-gray-600">
+              <div key={stage.stage} className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-300">
                 <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: stage.color }} />
                 {stage.stage}: <strong>{stage.count}</strong>
               </div>
@@ -253,26 +233,25 @@ export default function BackOfficeSnapshot() {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-bold text-[#1e3a5f] mb-4">Recent Activity</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300 mb-4">Recent Activity</h2>
           <div className="space-y-0 max-h-72 overflow-y-auto pr-1">
             {recentActivity.map((event, i) => (
-              <div key={i} className="flex items-start gap-3 py-2.5 border-b border-gray-50 last:border-0">
+              <div key={i} className="flex items-start gap-3 py-2.5 border-b border-gray-50 dark:border-gray-700 last:border-0">
                 <div className="shrink-0 mt-0.5">
                   <span
                     className={`inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold ${
                       event.actor === 'System'
-                        ? 'bg-gray-100 text-gray-500'
-                        : 'bg-blue-100 text-blue-700'
+                        ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                        : 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
                     }`}
                   >
                     {event.actor === 'System' ? '⚙' : event.actor.split('.')[0][0]}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-700 leading-snug">{event.action}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-sm text-gray-700 dark:text-gray-200 leading-snug">{event.action}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
                     <span className="font-medium">{event.actor}</span> · {event.time}
                   </p>
                 </div>

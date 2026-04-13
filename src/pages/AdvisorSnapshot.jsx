@@ -15,26 +15,24 @@ function fmtFull(n) {
 }
 
 const statusColors = {
-  Active: 'bg-emerald-100 text-emerald-700',
-  'At Risk': 'bg-amber-100 text-amber-700',
-  New: 'bg-blue-100 text-blue-700',
+  Active: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300',
+  'At Risk': 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
+  New: 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300',
 }
 
 const urgencyColors = {
-  Critical: 'bg-red-100 text-red-700 border-red-200',
-  High: 'bg-amber-100 text-amber-700 border-amber-200',
-  Medium: 'bg-blue-100 text-blue-700 border-blue-200',
+  Critical: 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800',
+  High: 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800',
+  Medium: 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800',
 }
 
 const BarTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 text-sm">
-      <p className="font-semibold text-gray-700 mb-1">{label}</p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-3 text-sm">
+      <p className="font-semibold text-gray-700 dark:text-gray-200 mb-1">{label}</p>
       {payload.map((p) => (
-        <p key={p.dataKey} style={{ color: p.color }}>
-          {p.name}: ${p.value.toLocaleString()}
-        </p>
+        <p key={p.dataKey} style={{ color: p.color }}>{p.name}: ${p.value.toLocaleString()}</p>
       ))}
     </div>
   )
@@ -43,12 +41,10 @@ const BarTooltip = ({ active, payload, label }) => {
 const AumTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 text-sm">
-      <p className="font-semibold text-gray-700 mb-1">{label}</p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-3 text-sm">
+      <p className="font-semibold text-gray-700 dark:text-gray-200 mb-1">{label}</p>
       {payload.map((p) => (
-        <p key={p.dataKey} style={{ color: p.fill }}>
-          {p.name}: {fmtFull(p.value)}
-        </p>
+        <p key={p.dataKey} style={{ color: p.fill }}>{p.name}: {fmtFull(p.value)}</p>
       ))}
     </div>
   )
@@ -87,8 +83,8 @@ export default function AdvisorSnapshot() {
   }
 
   function SortIcon({ col }) {
-    if (sortKey !== col) return <span className="text-gray-300 ml-1">↕</span>
-    return <span className="text-[#1e3a5f] ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>
+    if (sortKey !== col) return <span className="text-gray-300 dark:text-gray-600 ml-1">↕</span>
+    return <span className="text-[#1e3a5f] dark:text-blue-300 ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>
   }
 
   const quarterlyRevenue = useMemo(() => {
@@ -113,7 +109,7 @@ export default function AdvisorSnapshot() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header */}
+      {/* Header — already dark navy, fine in both modes */}
       <div className="bg-[#1e3a5f] rounded-2xl p-6 text-white">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -130,11 +126,10 @@ export default function AdvisorSnapshot() {
         </div>
       </div>
 
-      {/* AUM + Revenue Charts */}
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* AUM by Segment */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-bold text-[#1e3a5f] mb-4">AUM by Segment</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300 mb-4">AUM by Segment</h2>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={aumBySegment} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -146,17 +141,18 @@ export default function AdvisorSnapshot() {
           </ResponsiveContainer>
         </div>
 
-        {/* Revenue */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-[#1e3a5f]">Revenue by Type</h2>
+            <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300">Revenue by Type</h2>
             <div className="flex gap-1">
               {['Monthly', 'Quarterly'].map((v) => (
                 <button
                   key={v}
                   onClick={() => setRevenueView(v)}
                   className={`px-3 py-1 rounded-md text-xs font-semibold transition-colors ${
-                    revenueView === v ? 'bg-[#1e3a5f] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    revenueView === v
+                      ? 'bg-[#1e3a5f] text-white'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
                   {v}
@@ -180,21 +176,21 @@ export default function AdvisorSnapshot() {
       </div>
 
       {/* Client Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-          <h2 className="text-lg font-bold text-[#1e3a5f]">Client Book</h2>
+          <h2 className="text-lg font-bold text-[#1e3a5f] dark:text-blue-300">Client Book</h2>
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               placeholder="Search clients..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
             <select
               value={riskFilter}
               onChange={(e) => setRiskFilter(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               {riskProfiles.map((p) => <option key={p}>{p}</option>)}
             </select>
@@ -203,7 +199,7 @@ export default function AdvisorSnapshot() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100">
+              <tr className="border-b border-gray-100 dark:border-gray-700">
                 {[
                   { key: 'name', label: 'Client' },
                   { key: 'accountValue', label: 'Account Value' },
@@ -214,7 +210,7 @@ export default function AdvisorSnapshot() {
                 ].map(({ key, label }) => (
                   <th
                     key={key}
-                    className="text-left py-2 px-3 font-semibold text-gray-500 cursor-pointer hover:text-[#1e3a5f] whitespace-nowrap select-none"
+                    className="text-left py-2 px-3 font-semibold text-gray-500 dark:text-gray-400 cursor-pointer hover:text-[#1e3a5f] dark:hover:text-blue-300 whitespace-nowrap select-none"
                     onClick={() => handleSort(key)}
                   >
                     {label}<SortIcon col={key} />
@@ -227,52 +223,52 @@ export default function AdvisorSnapshot() {
                 <>
                   <tr
                     key={c.id}
-                    className={`border-b border-gray-50 cursor-pointer hover:bg-blue-50/40 transition-colors ${
-                      i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
-                    } ${expandedRow === c.id ? 'bg-blue-50/60' : ''}`}
+                    className={`border-b border-gray-50 dark:border-gray-700 cursor-pointer hover:bg-blue-50/40 dark:hover:bg-blue-900/20 transition-colors ${
+                      i % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50/50 dark:bg-gray-700/30'
+                    } ${expandedRow === c.id ? 'bg-blue-50/60 dark:bg-blue-900/20' : ''}`}
                     onClick={() => setExpandedRow(expandedRow === c.id ? null : c.id)}
                   >
-                    <td className="py-2.5 px-3 font-medium text-gray-800">{c.name}</td>
-                    <td className="py-2.5 px-3 text-gray-700">{fmtFull(c.accountValue)}</td>
+                    <td className="py-2.5 px-3 font-medium text-gray-800 dark:text-gray-100">{c.name}</td>
+                    <td className="py-2.5 px-3 text-gray-700 dark:text-gray-200">{fmtFull(c.accountValue)}</td>
                     <td className={`py-2.5 px-3 font-semibold ${c.ytdReturn >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                       {c.ytdReturn >= 0 ? '+' : ''}{c.ytdReturn}%
                     </td>
-                    <td className="py-2.5 px-3 text-gray-600">{c.riskProfile}</td>
-                    <td className="py-2.5 px-3 text-gray-500">{c.lastContact}</td>
+                    <td className="py-2.5 px-3 text-gray-600 dark:text-gray-300">{c.riskProfile}</td>
+                    <td className="py-2.5 px-3 text-gray-500 dark:text-gray-400">{c.lastContact}</td>
                     <td className="py-2.5 px-3">
-                      <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusColors[c.status] || 'bg-gray-100 text-gray-600'}`}>
+                      <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusColors[c.status] || 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'}`}>
                         {c.status}
                       </span>
                     </td>
                   </tr>
                   {expandedRow === c.id && (
-                    <tr key={`${c.id}-exp`} className="bg-blue-50">
+                    <tr key={`${c.id}-exp`} className="bg-blue-50 dark:bg-blue-900/20">
                       <td colSpan={6} className="px-4 py-4">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
-                            <p className="text-gray-400 text-xs mb-0.5">Account Value</p>
-                            <p className="font-semibold text-gray-800">{fmtFull(c.accountValue)}</p>
+                            <p className="text-gray-400 dark:text-gray-500 text-xs mb-0.5">Account Value</p>
+                            <p className="font-semibold text-gray-800 dark:text-gray-100">{fmtFull(c.accountValue)}</p>
                           </div>
                           <div>
-                            <p className="text-gray-400 text-xs mb-0.5">YTD Return</p>
+                            <p className="text-gray-400 dark:text-gray-500 text-xs mb-0.5">YTD Return</p>
                             <p className={`font-semibold ${c.ytdReturn >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                               {c.ytdReturn >= 0 ? '+' : ''}{c.ytdReturn}%
                             </p>
                           </div>
                           <div>
-                            <p className="text-gray-400 text-xs mb-0.5">Risk Profile</p>
-                            <p className="font-semibold text-gray-800">{c.riskProfile}</p>
+                            <p className="text-gray-400 dark:text-gray-500 text-xs mb-0.5">Risk Profile</p>
+                            <p className="font-semibold text-gray-800 dark:text-gray-100">{c.riskProfile}</p>
                           </div>
                           <div>
-                            <p className="text-gray-400 text-xs mb-0.5">Last Contact</p>
-                            <p className="font-semibold text-gray-800">{c.lastContact}</p>
+                            <p className="text-gray-400 dark:text-gray-500 text-xs mb-0.5">Last Contact</p>
+                            <p className="font-semibold text-gray-800 dark:text-gray-100">{c.lastContact}</p>
                           </div>
                         </div>
                         <div className="mt-3 flex gap-2">
                           <button className="text-xs bg-[#1e3a5f] text-white px-3 py-1.5 rounded-lg hover:bg-[#16304f] transition-colors">
                             Schedule Review
                           </button>
-                          <button className="text-xs bg-white text-[#1e3a5f] border border-[#1e3a5f] px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
+                          <button className="text-xs bg-white dark:bg-gray-700 text-[#1e3a5f] dark:text-blue-300 border border-[#1e3a5f] dark:border-blue-500 px-3 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors">
                             View Portfolio
                           </button>
                         </div>
@@ -282,7 +278,7 @@ export default function AdvisorSnapshot() {
                 </>
               ))}
               {filteredClients.length === 0 && (
-                <tr><td colSpan={6} className="text-center py-8 text-gray-400">No clients match your filters.</td></tr>
+                <tr><td colSpan={6} className="text-center py-8 text-gray-400 dark:text-gray-500">No clients match your filters.</td></tr>
               )}
             </tbody>
           </table>
@@ -290,11 +286,11 @@ export default function AdvisorSnapshot() {
       </div>
 
       {/* At-Risk Clients */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">⚠️</span>
-          <h2 className="text-lg font-bold text-amber-800">At-Risk Clients</h2>
-          <span className="ml-auto bg-amber-200 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+          <h2 className="text-lg font-bold text-amber-800 dark:text-amber-300">At-Risk Clients</h2>
+          <span className="ml-auto bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 text-xs font-semibold px-2.5 py-1 rounded-full">
             {atRiskClients.length} clients
           </span>
         </div>
@@ -302,7 +298,7 @@ export default function AdvisorSnapshot() {
           {atRiskClients.map((c) => (
             <div
               key={c.id}
-              className={`border rounded-xl p-4 cursor-pointer transition-shadow hover:shadow-md bg-white ${urgencyColors[c.urgency]}`}
+              className={`border rounded-xl p-4 cursor-pointer transition-shadow hover:shadow-md bg-white dark:bg-gray-800 ${urgencyColors[c.urgency]}`}
               onClick={() => setExpandedRisk(expandedRisk === c.id ? null : c.id)}
             >
               <div className="flex items-start justify-between gap-3">
@@ -310,19 +306,15 @@ export default function AdvisorSnapshot() {
                   <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${urgencyColors[c.urgency]}`}>
                     {c.urgency}
                   </span>
-                  <span className="font-semibold text-gray-800">{c.name}</span>
+                  <span className="font-semibold text-gray-800 dark:text-gray-100">{c.name}</span>
                 </div>
-                <span className="text-sm text-gray-500">{fmtFull(c.accountValue)}</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">{fmtFull(c.accountValue)}</span>
               </div>
-              <p className="text-sm text-gray-600 mt-2 ml-16">{c.reason}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 ml-16">{c.reason}</p>
               {expandedRisk === c.id && (
                 <div className="mt-3 ml-16 flex gap-2">
-                  <button className="text-xs bg-amber-600 text-white px-3 py-1.5 rounded-lg hover:bg-amber-700 transition-colors">
-                    Contact Now
-                  </button>
-                  <button className="text-xs bg-white text-amber-700 border border-amber-300 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition-colors">
-                    View Account
-                  </button>
+                  <button className="text-xs bg-amber-600 text-white px-3 py-1.5 rounded-lg hover:bg-amber-700 transition-colors">Contact Now</button>
+                  <button className="text-xs bg-white dark:bg-gray-700 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700 px-3 py-1.5 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-600 transition-colors">View Account</button>
                 </div>
               )}
             </div>
