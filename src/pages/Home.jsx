@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import WeatherWidget from '../components/WeatherWidget'
+import UploadModal from '../components/UploadModal'
 
 const pets = [
   { id: 1, name: "Biscuit", type: "Golden Retriever", fact: "Loves to shred financial reports — only the bearish ones.", img: "https://placedog.net/400/300?id=1" },
@@ -50,8 +52,11 @@ const features = [
 ]
 
 export default function Home() {
+  const [uploadOpen, setUploadOpen] = useState(false)
+
   return (
     <div className="flex flex-col">
+      {uploadOpen && <UploadModal onClose={() => setUploadOpen(false)} />
       {/* Hero Section */}
       <section
         className="relative flex flex-col items-center justify-center text-center px-6 py-32 md:py-44"
@@ -93,6 +98,15 @@ export default function Home() {
             >
               Executive Dashboard
             </Link>
+            <button
+              onClick={() => setUploadOpen(true)}
+              className="inline-flex items-center justify-center gap-2 bg-transparent text-white font-semibold px-8 py-3.5 rounded-lg border border-white/40 hover:bg-white/10 transition-colors duration-200"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              Upload Document
+            </button>
           </div>
         </div>
 
