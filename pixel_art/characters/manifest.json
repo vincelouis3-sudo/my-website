@@ -1,0 +1,59 @@
+{
+  "classes": {
+    "knight": {
+      "stages": [
+        "squire",
+        "knight",
+        "paladin"
+      ],
+      "description": "Heavy armor, shield, sword — holy warrior path"
+    },
+    "rogue": {
+      "stages": [
+        "cutpurse",
+        "rogue",
+        "shadowblade"
+      ],
+      "description": "Stealth, daggers, shadow magic — darkness path"
+    },
+    "barbarian": {
+      "stages": [
+        "raider",
+        "barbarian",
+        "warchief"
+      ],
+      "description": "Fury, axes, warpaint — berserker path"
+    },
+    "wizard": {
+      "stages": [
+        "apprentice",
+        "mage",
+        "archmage"
+      ],
+      "description": "Spells, staves, arcane mastery — magic path"
+    },
+    "archer": {
+      "stages": [
+        "scout",
+        "archer",
+        "ranger"
+      ],
+      "description": "Bows, nature, spirit companions — ranger path"
+    }
+  },
+  "heroine": {
+    "name": "Liberation Leader",
+    "title": "Commander of the Liberation Army",
+    "description": "Clad in white and gold plate armor with a flowing crimson cape, she wields the legendary Sword of Liberation. Silver-streaked dark hair frames a face hardened by war but lit with unbreakable conviction. She fights for freedom.",
+    "sprite": "heroine/liberation_leader.svg"
+  },
+  "scale": 5,
+  "sprite_size": {
+    "width": 16,
+    "height": 28
+  },
+  "display_size": {
+    "width": 80,
+    "height": 140
+  }
+}
